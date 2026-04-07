@@ -1,0 +1,64 @@
+[
+  {
+    "id": "a2f55475-dfa7-4a7a-94e1-f2900b8172d8",
+    "title": "Chat với project_report_final.pdf",
+    "pdf_name": "project_report_final.pdf",
+    "created_at": "2026-04-07T21:17:03",
+    "updated_at": "2026-04-07T21:18:19",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "PDF đã sẵn sàng. Bạn có thể hỏi bất kỳ điều gì về nội dung tài liệu."
+      },
+      {
+        "role": "user",
+        "content": "bạn tên gì"
+      },
+      {
+        "role": "assistant",
+        "content": "Tài liệu không đề cập đến vấn đề này."
+      },
+      {
+        "role": "user",
+        "content": "đây là gì"
+      },
+      {
+        "role": "assistant",
+        "content": "Đây là một hệ thống Q&A (Question-Answering) dựa trên Giải pháp Thông tin Rồi Khi Thuộc (Retrieval-Augmented Generation, RAG)."
+      },
+      {
+        "role": "assistant",
+        "content": "Tóm tắt tài liệu:\n\nBài tập lớn OSSD 2026: Hệ thống RAG (Retrieval-Augmented Generation) với LLMs\n\nKết cấu:\n\n1. Giới thiệu:\n   - Bối cảnh và động lực\n   - Mục tiêu dự án\n   - Phạm vi dự án\n\n2. Cơ sở lý thuyết:\n   - RAG (Retrieval-Augmented Generation)\n     - Khái niệm\n     - Kiến trúc RAG\n\n3. Thiết kế hệ thống:\n   - Kiến trúc tổng quan: Multi-layer architecture\n   - Cụm công cụ:\n     - LangChain Framework\n     - Ollama Framework\n\n4. Yêu cầu phát triển:\n   - Câu hỏi 1: Thêm hỗ trợ file DOCX\n   - Câu hỏi 2: Lưu trữ lịch sử hội thoại\n   - Câu hỏi 3: Thêm nút xóa lịch sử\n   - Câu hỏi 4: Cải thiện chunk strategy\n\n5. Kết quả:\n   - Privacy: ✓ Passed\n   - Cost-effective: Free, Paid Free\n   - Customizable: High, Low\n   - User-friendly: Simple, Easy to use\n   - Accurate: Excellent, Good\n   - Fast: Acceptable, Very Fast\n\n6. So sánh với các giải pháp khác:\n   - ChatGPT Local LLM\n\nHướng dẫn sử dụng:\n1. Khởi động ứng dụng\n   - Mở terminal/command prompt"
+      }
+    ]
+  },
+  {
+    "id": "33f679bd-6851-4ed0-8753-fdb1f2bbd34b",
+    "title": "Chat với OnMobile.pdf",
+    "pdf_name": "OnMobile.pdf",
+    "created_at": "2026-04-07T21:16:12",
+    "updated_at": "2026-04-07T21:16:44",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "PDF đã sẵn sàng. Bạn có thể hỏi bất kỳ điều gì về nội dung tài liệu."
+      },
+      {
+        "role": "user",
+        "content": "đây là đồ án gì"
+      },
+      {
+        "role": "assistant",
+        "content": "Đây là một đề tài ôn tập cho kỳ thi cuối năm. Đồ án này tập trung vào việc ôn luyện về lịch sử và kiến thức cơ bản về hệ điều hành di động, ứng dụng Android, và các loại phương tiện truyền thống như tệp tin multimedia, các phần tử trong Activity, Intent... cũng như các kỹ thuật lập trình Android và cơ sở dữ liệu SQLite."
+      },
+      {
+        "role": "user",
+        "content": "tao tên minh teu"
+      },
+      {
+        "role": "assistant",
+        "content": "Tài liệu không đề cập đến vấn đề này."
+      }
+    ]
+  }
+]

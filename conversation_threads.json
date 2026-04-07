@@ -1,0 +1,58 @@
+[
+  {
+    "id": "2dd08573-1e61-4d9b-ac61-dbfca95eea63",
+    "title": "tao là minh truc",
+    "messages": [
+      {
+        "role": "user",
+        "content": "tao là minh truc"
+      },
+      {
+        "role": "assistant",
+        "content": "Từ ngữ \"tao là\" đã không hợp lệ trong văn phạm hiện đại. Lời mời gọi bạn nên thay bằng chữ \"xin\" hoặc \"xin chào\". Bạn có thể sửa lại câu bằng cách thay thế bằng từ như sau:\n\n---\n\nTa là Minh Trúc\n\n---\n\nLời cảm ơn,\nTrần Thị Khánh Như"
+      },
+      {
+        "role": "user",
+        "content": "tao là ai"
+      },
+      {
+        "role": "assistant",
+        "content": "Tàu là bạn Trần Thị Khánh Như."
+      },
+      {
+        "role": "user",
+        "content": "no"
+      },
+      {
+        "role": "assistant",
+        "content": "Tài liệu không đề cập đến vấn đề này."
+      }
+    ],
+    "document_meta": null,
+    "updated_at": "2026-04-07T21:45:39"
+  },
+  {
+    "id": "9e54a4d0-a1ef-4598-b521-b0d7924a16d4",
+    "title": "What is this document about?",
+    "messages": [
+      {
+        "role": "user",
+        "content": "What is this document about?"
+      },
+      {
+        "role": "assistant",
+        "content": "This document is a report on the \"React in Frontend Programming\" course conducted by ThS. Phạm Thi Vương at Khoa Công Nghệ Thông Tin, TP.HCM. It describes the learning journey of a student named Trần Thị Khánh Như who has completed their research on the topic under supervision and guidance from the instructor. The document outlines key points about ReactJS, including its concepts (Rendering & Conditional Rendering, List & Key), types of data in React, and participation in group meetings to share findings with peers."
+      },
+      {
+        "role": "user",
+        "content": "dịch tiếng việt"
+      },
+      {
+        "role": "assistant",
+        "content": "Dựa vào thông tin tài liệu, không được bịa đặt và không sử dụng kiến thức ngoài tài liệu. Tôi sẽ dịch nội dung sau:\n\nTìm hiểu về công nghệ React trong lập trình Frontend.\n\nNội dung đã thực hiện:\nKiểm tra lại các nội dung đã viết trong báo cáo.\nBổ sung những phần còn thiếu.\nKết quả đạt được:\n- Bổ sung một số ví dụ minh họa cho các phần lý thuyết.\n- Bổ sung bài tập vận dụng cho phần Xử lý form và sự kiện.\n\nKhó khăn: Không có."
+      }
+    ],
+    "document_meta": null,
+    "updated_at": "2026-04-07T21:44:05"
+  }
+]
