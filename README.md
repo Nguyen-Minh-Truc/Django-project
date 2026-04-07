@@ -1,125 +1,235 @@
-## 🚀 PDF QA App - Setup & Run Guide
+# RAG Document Chat
 
-### Prerequisites
+Ứng dụng hỏi đáp tài liệu dùng `Django + Streamlit + LangChain + Ollama`.
 
-- Python 3.10+
-- Ollama chạy: `ollama serve`
-- Model Qwen2.5 đã pull: `ollama pull qwen2.5:1.5b`
-- Virtual environment created: `venv/`
+Project hiện hỗ trợ:
+- Upload và xử lý `PDF`
+- Upload và xử lý `DOCX`
+- Hỏi đáp nhiều lượt trên cùng tài liệu
+- Tóm tắt tài liệu
+- Lưu lịch sử chat theo session
+- Lưu từng cuộc hội thoại thành thread riêng ở frontend
+- Xóa lịch sử chat
+- Xóa tài liệu đã upload khỏi vector store
 
-### Project Structure
+## Công nghệ sử dụng
 
-```
+- `Django 5`
+- `Django REST Framework`
+- `Streamlit`
+- `LangChain`
+- `FAISS`
+- `Ollama`
+- `pypdf`
+- `python-docx`
+
+## Cấu trúc thư mục
+
+```text
 project/
-├── core/                    # Business logic (PDF, LLM, session management)
-├── myapp/                   # Django project
+├── app.py
+├── requirements.txt
+├── conversation_threads.json
+├── rag_graph/
 │   ├── manage.py
-│   ├── myapp/settings.py
-│   └── app/                 # Django REST app (views, urls)
-├── app.py                   # Streamlit frontend
-└── requirements.txt
+│   ├── myapp/
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── asgi.py
+│   │   └── wsgi.py
+│   └── app/
+│       ├── views.py
+│       ├── urls.py
+│       ├── apps.py
+│       └── core/
+│           ├── dependencies.py
+│           ├── exceptions.py
+│           ├── pdf_service.py
+│           ├── prompts.py
+│           └── session_store.py
 ```
 
-### 🎯 How to Run
+## Yêu cầu trước khi chạy
 
-#### Option 1: Run Backend & Frontend Separately (for development)
-
-**Terminal 1 - Django Backend:**
+- Python `3.10+`
+- Đã tạo virtual environment `venv`
+- Ollama đang chạy:
 
 ```bash
-cd /path/to/project
+ollama serve
+```
+
+- Đã pull model:
+
+```bash
+ollama pull qwen2.5:1.5b
+```
+
+## Cài thư viện
+
+```bash
 source venv/bin/activate
-cd myapp
-python manage.py runserver 0.0.0.0:8000
-# Backend runs on http://localhost:8000/api
-```
-
-**Terminal 2 - Streamlit Frontend:**
-
-```bash
-cd /path/to/project
-source venv/bin/activate
-streamlit run app.py
-# Frontend runs on http://localhost:8501
-```
-
-### 🔌 API Endpoints
-
-Once backend is running on `http://localhost:8000/api`:
-
-- `POST /api/upload/` - Upload PDF
-- `POST /api/ask/` - Ask question about PDF
-- `POST /api/summary/` - Get PDF summary
-- `DELETE /api/clear/` - Clear session
-- `GET /api/health/` - Check system health
-
-### 📝 Testing Django
-
-```bash
-source ../venv/bin/activate
-python manage.py check       # Check configuration
-python manage.py migrate    # Apply migrations (if needed)
-python manage.py shell      # Interactive shell to test imports
-```
-
-### ⚠️ Troubleshooting
-
-**"ModuleNotFoundError: No module named 'core'"**
-
-- Make sure `core/` directory exists at project root
-- Verify `sys.path` includes project root in manage.py, wsgi.py, asgi.py
-- Check PYTHONPATH is set correctly when running
-
-**"No module named 'app.urls'; 'app' is not a package"**
-
-- Verify `myapp/app/__init__.py` exists
-- Check 'app' is in INSTALLED_APPS in settings.py
-
-**Ollama connection error**
-
-- Run `ollama serve` in another terminal
-- Verify model exists: `ollama list` (should show qwen2.5:1.5b)
-- Check port 11434 is accessible
-
-**Streamlit can't reach backend**
-
-- Verify Django is running on http://localhost:8000
-- Check BASE_URL in app.py is correct
-- Look at Streamlit logs for connection details
-
-### 🧪 Manual API Testing
-
-```bash
-# Upload PDF
-curl -X POST -F "file=@document.pdf" http://localhost:8000/api/upload/
-
-# Ask question
-curl -X POST -H "Content-Type: application/json" \
-  -d '{"query":"What is this document about?"}' \
-  http://localhost:8000/api/ask/
-
-# Get summary
-curl -X POST http://localhost:8000/api/summary/
-
-# Health check
-curl http://localhost:8000/api/health/
-
-# Clear session
-curl -X DELETE http://localhost:8000/api/clear/
-```
-
-### 📦 Install Dependencies (if needed)
-
-```bash
 pip install -r requirements.txt
 ```
 
-Key packages:
+Nếu muốn dùng `DOCX`, cần có:
 
-- Django 5.2.10
-- djangorestframework
-- langchain-community
-- ollama
-- pypdf
-- streamlit
-- requests
+```bash
+pip install python-docx
+```
+
+## Cách chạy
+
+Mở 2 terminal riêng.
+
+### Terminal 1: chạy Django backend
+
+```bash
+source venv/bin/activate
+cd rag_graph
+python manage.py runserver
+```
+
+Backend chạy tại:
+
+```text
+http://localhost:8000/api
+```
+
+### Terminal 2: chạy Streamlit frontend
+
+```bash
+cd /Users/nguyenminhtruc/Desktop/WorkSpace/SGU/SGU_HK2_25-26/OpenSource/project
+source venv/bin/activate
+streamlit run app.py
+```
+
+Frontend chạy tại:
+
+```text
+http://localhost:8501
+```
+
+## Luồng sử dụng
+
+1. Mở frontend Streamlit
+2. Upload `PDF` hoặc `DOCX`
+3. Đợi hệ thống tạo vector store
+4. Nhập câu hỏi trong khung chat
+5. Xem câu trả lời ngay trên giao diện
+6. Có thể hỏi tiếp nhiều câu trên cùng tài liệu
+7. Có thể bấm `xoá lịch sử`
+8. Có thể bấm `xoá tài liệu đang upload`
+
+## Các API endpoint
+
+- `POST /api/upload/`
+  - Upload tài liệu và tạo vector store
+  - Hỗ trợ `pdf`, `docx`
+
+- `POST /api/ask/`
+  - Hỏi đáp trên tài liệu đã upload
+
+- `POST /api/summary/`
+  - Tóm tắt tài liệu hiện tại
+
+- `DELETE /api/clear/`
+  - Xóa tài liệu đã upload khỏi session hiện tại
+
+- `DELETE /api/clear-history/`
+  - Xóa toàn bộ lịch sử chat trong session hiện tại
+
+- `GET /api/session-state/`
+  - Lấy metadata tài liệu và lịch sử chat hiện tại
+
+- `GET /api/health/`
+  - Kiểm tra trạng thái API và Ollama
+
+## Kiểm tra nhanh backend
+
+```bash
+cd rag_graph
+python manage.py check
+python manage.py test
+```
+
+## Test API thủ công
+
+### Upload file
+
+```bash
+curl -X POST -F "file=@document.pdf" http://localhost:8000/api/upload/
+```
+
+### Hỏi tài liệu
+
+```bash
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"query":"Tài liệu này nói về gì?"}' \
+  http://localhost:8000/api/ask/
+```
+
+### Tóm tắt tài liệu
+
+```bash
+curl -X POST http://localhost:8000/api/summary/
+```
+
+### Xóa lịch sử chat
+
+```bash
+curl -X DELETE http://localhost:8000/api/clear-history/
+```
+
+### Xóa tài liệu hiện tại
+
+```bash
+curl -X DELETE http://localhost:8000/api/clear/
+```
+
+## Các lỗi thường gặp
+
+### `ModuleNotFoundError: No module named 'docx'`
+
+Nguyên nhân: môi trường chưa cài `python-docx`.
+
+Khắc phục:
+
+```bash
+source venv/bin/activate
+pip install python-docx
+```
+
+### `Bad Request: /api/ask/`
+
+Nguyên nhân thường gặp:
+- chưa upload tài liệu trước
+- session cookie không được giữ giữa các request
+
+Trong frontend hiện tại, app đã dùng chung `requests.Session()` để giữ session backend.
+
+### Không kết nối được Ollama
+
+Kiểm tra:
+
+```bash
+ollama serve
+ollama list
+```
+
+Model mặc định đang dùng là:
+
+```text
+qwen2.5:1.5b
+```
+
+### LangChain cảnh báo deprecated `Ollama`
+
+Đây là warning, chưa làm app hỏng. Hệ thống vẫn chạy được bình thường.
+
+## Ghi chú hiện tại
+
+- Phần `chunk_size` và `chunk_overlap` vẫn được backend hỗ trợ, nhưng đang được ẩn khỏi UI.
+- Lịch sử hội thoại hiện được lưu thành thread ở file `conversation_threads.json`.
+- Lịch sử hỏi đáp trong backend vẫn được lưu theo `session`.
