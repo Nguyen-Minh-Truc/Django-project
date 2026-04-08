@@ -17,6 +17,94 @@ THREADS_FILE = Path("conversation_threads.json")
 st.set_page_config(page_title="RAG Document Chat", page_icon="📄", layout="wide")
 
 
+def inject_theme() -> None:
+    st.markdown(
+        """
+        <style>
+            :root {
+                --primary-color: #007BFF;
+                --secondary-color: #FFC107;
+                --background-color: #F8F9FA;
+                --sidebar-color: #2C2F33;
+                --text-color: #212529;
+                --sidebar-text-color: #FFFFFF;
+            }
+
+            .stApp {
+                background: var(--background-color);
+                color: var(--text-color);
+            }
+
+            .stApp h1,
+            .stApp h2,
+            .stApp h3,
+            .stApp h4,
+            .stApp h5,
+            .stApp h6,
+            .stApp p,
+            .stApp li,
+            .stApp label,
+            .stApp span,
+            .stApp div {
+                color: var(--text-color);
+            }
+
+            [data-testid="stSidebar"] {
+                background: var(--sidebar-color);
+            }
+
+            [data-testid="stSidebar"] h1,
+            [data-testid="stSidebar"] h2,
+            [data-testid="stSidebar"] h3,
+            [data-testid="stSidebar"] h4,
+            [data-testid="stSidebar"] h5,
+            [data-testid="stSidebar"] h6,
+            [data-testid="stSidebar"] p,
+            [data-testid="stSidebar"] label,
+            [data-testid="stSidebar"] span,
+            [data-testid="stSidebar"] div,
+            [data-testid="stSidebar"] small {
+                color: var(--sidebar-text-color) !important;
+            }
+
+            .stButton button {
+                border: 1px solid var(--primary-color);
+                background: var(--primary-color);
+                color: #FFFFFF;
+            }
+
+            .stButton button:hover {
+                border: 1px solid var(--primary-color);
+                background: #0069d9;
+                color: #FFFFFF;
+            }
+
+            [data-testid="stSidebar"] .stButton button {
+                border: 1px solid #e0a800;
+                background: var(--secondary-color);
+                color: #212529 !important;
+                font-weight: 600;
+            }
+
+            [data-testid="stSidebar"] .stButton button:hover {
+                border: 1px solid #d39e00;
+                background: #ffca2c;
+                color: #212529 !important;
+            }
+
+            a {
+                color: var(--primary-color) !important;
+            }
+
+            [data-testid="stFileUploaderDropzone"] {
+                border-color: rgba(255, 193, 7, 0.8);
+            }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
 def get_backend_session() -> requests.Session:
     if "backend_session" not in st.session_state:
         st.session_state.backend_session = requests.Session()
@@ -99,6 +187,28 @@ def get_thread(thread_id: str | None) -> dict | None:
         if thread["id"] == thread_id:
             return thread
     return None
+
+
+def delete_thread(thread_id: str) -> None:
+    st.session_state.conversation_threads = [
+        thread
+        for thread in st.session_state.conversation_threads
+        if thread["id"] != thread_id
+    ]
+
+    if st.session_state.active_thread_id == thread_id:
+        st.session_state.active_thread_id = None
+    if st.session_state.viewing_thread_id == thread_id:
+        st.session_state.viewing_thread_id = st.session_state.active_thread_id
+
+    save_threads()
+
+
+def clear_all_threads() -> None:
+    st.session_state.conversation_threads = []
+    st.session_state.active_thread_id = None
+    st.session_state.viewing_thread_id = None
+    save_threads()
 
 
 def create_or_update_active_thread() -> None:
@@ -212,19 +322,72 @@ def refresh_chat_history_from_response(payload: dict) -> None:
     create_or_update_active_thread()
 
 
+def clear_history_action() -> None:
+    try:
+        response = backend_session.delete(
+            f"{BASE_URL}/clear-history/",
+            timeout=15,
+        )
+    except requests.RequestException as exc:
+        st.sidebar.error(f"Lỗi kết nối backend: {exc}")
+        return
+
+    if response.status_code == 200:
+        # Đồng bộ lại state từ backend để tránh lệch cookie/session.
+        sync_from_backend()
+        # Nếu đang xem thread cũ, chuyển về thread hiện tại để UI phản ánh kết quả xóa.
+        st.session_state.viewing_thread_id = st.session_state.active_thread_id
+        st.sidebar.success("Đã xóa lịch sử chat của session hiện tại.")
+        st.rerun()
+
+    st.sidebar.error(response.text)
+
+
+def clear_document_action() -> None:
+    try:
+        response = backend_session.delete(
+            f"{BASE_URL}/clear/",
+            timeout=15,
+        )
+    except requests.RequestException as exc:
+        st.sidebar.error(f"Lỗi kết nối backend: {exc}")
+        return
+
+    if response.status_code == 200:
+        st.session_state.document_meta = None
+        st.session_state.vector_store_ready = False
+        st.session_state.chat_history = []
+        st.session_state.messages = []
+        create_or_update_active_thread()
+        st.rerun()
+
+    st.sidebar.error(response.text)
+
+
 def render_sidebar_history() -> None:
     st.sidebar.subheader("Các cuộc trò chuyện")
     if not st.session_state.conversation_threads:
         st.sidebar.caption("Chưa có cuộc trò chuyện nào được lưu.")
         return
 
+    if st.sidebar.button("Xóa tất cả cuộc trò chuyện đã lưu", use_container_width=True):
+        clear_all_threads()
+        st.rerun()
+
     for thread in st.session_state.conversation_threads:
         label = thread.get("title", "Cuộc trò chuyện")
         if thread["id"] == st.session_state.active_thread_id:
             label = f"• {label}"
-        if st.sidebar.button(label, key=f"thread-{thread['id']}", use_container_width=True):
-            restore_thread_for_view(thread["id"])
-            st.rerun()
+
+        col_open, col_delete = st.sidebar.columns([0.82, 0.18])
+        with col_open:
+            if st.button(label, key=f"thread-{thread['id']}", use_container_width=True):
+                restore_thread_for_view(thread["id"])
+                st.rerun()
+        with col_delete:
+            if st.button("✕", key=f"delete-thread-{thread['id']}", use_container_width=True):
+                delete_thread(thread["id"])
+                st.rerun()
 
 
 @st.dialog("Xác nhận xóa lịch sử")
@@ -282,9 +445,6 @@ def confirm_clear_vector_store_dialog() -> None:
 def render_sidebar() -> None:
     st.sidebar.title("RAG Controls")
     st.sidebar.caption("Hỗ trợ PDF và DOCX, có lưu lịch sử chat theo session.")
-    st.sidebar.markdown("---")
-
-    st.sidebar.markdown("---")
     st.sidebar.subheader("Tài liệu")
     uploaded_file = st.sidebar.file_uploader(
         "Upload PDF hoặc DOCX",
@@ -295,26 +455,15 @@ def render_sidebar() -> None:
     if st.sidebar.button("Tải tài liệu", use_container_width=True, disabled=uploaded_file is None):
         handle_upload(uploaded_file)
 
-    if st.session_state.document_meta:
-        meta = st.session_state.document_meta
-        st.sidebar.info(
-            "\n".join(
-                [
-                    f"File: {meta.get('file_name', 'Không rõ')}",
-                    f"Loại: {meta.get('file_type', 'Không rõ').upper()}",
-                    f"Chunk size: {meta.get('chunk_size', '-')}",
-                    f"Chunk overlap: {meta.get('chunk_overlap', '-')}",
-                ]
-            )
-        )
+   
 
     col1, col2 = st.sidebar.columns(2)
     with col1:
-        if st.button("xoá lịch sử", use_container_width=True):
-            confirm_clear_history_dialog()
+        if st.button("xoá cuộc hội thoại", use_container_width=True):
+            clear_history_action()
     with col2:
-        if st.button("xoá tài liệu đang upload", use_container_width=True):
-            confirm_clear_vector_store_dialog()
+        if st.button("xoá tài liệu hiện tại", use_container_width=True):
+            clear_document_action()
 
     st.sidebar.markdown("---")
     render_sidebar_history()
@@ -392,6 +541,7 @@ def render_main() -> None:
 
 
 init_state()
+inject_theme()
 backend_session = get_backend_session()
 sync_from_backend()
 render_sidebar()
