@@ -2,10 +2,6 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from pathlib import Path
-
-# Expose the project root so imports like `rag_graph.app...` resolve reliably.
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 def main():
     """Run administrative tasks."""

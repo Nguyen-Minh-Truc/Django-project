@@ -14,7 +14,9 @@ Error handling map:
 
 import logging
 import socket
+from concurrent.futures import ThreadPoolExecutor
 from functools import wraps
+from time import perf_counter
 from typing import Callable
 
 import requests
@@ -56,6 +58,30 @@ def _append_chat_history(request: Request, question: str, answer: str) -> list[d
     return history
 
 
+def _append_compare_history(
+    request: Request,
+    question: str,
+    rag_answer: str,
+    corag_answer: str,
+    rag_trace: dict | None = None,
+    corag_trace: dict | None = None,
+) -> list[dict]:
+    history = _get_chat_history(request)
+    entry = {
+        "question": question,
+        "rag_answer": rag_answer,
+        "corag_answer": corag_answer,
+        "mode": "compare",
+    }
+    if rag_trace:
+        entry["rag_trace"] = rag_trace
+    if corag_trace:
+        entry["corag_trace"] = corag_trace
+    history.append(entry)
+    _set_chat_history(request, history)
+    return history
+
+
 def _clear_chat_history(request: Request) -> None:
     request.session[CHAT_HISTORY_KEY] = []
     request.session.modified = True
@@ -87,6 +113,182 @@ def _parse_chunk_params(request: Request) -> tuple[int, int]:
         ) from exc
     return chunk_size, chunk_overlap
 
+
+def _extract_keywords(query: str) -> list[str]:
+    stopwords = {
+        "a", "an", "and", "are", "as", "at", "be", "by", "cho", "của", "có",
+        "de", "do", "for", "from", "hãy", "how", "in", "is", "it", "là",
+        "of", "on", "or", "the", "to", "và", "về", "with", "what", "which", "why",
+    }
+    tokens = []
+    seen = set()
+    for raw_token in query.lower().split():
+        token = "".join(character for character in raw_token if character.isalnum() or character in "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữýỳỵỷỹ")
+        if len(token) <= 2 or token in stopwords or token in seen:
+            continue
+        seen.add(token)
+        tokens.append(token)
+    return tokens
+
+
+def _unique_texts(texts: list[str]) -> list[str]:
+    unique: list[str] = []
+    seen: set[str] = set()
+    for text in texts:
+        normalized = text.strip()
+        if not normalized or normalized in seen:
+            continue
+        seen.add(normalized)
+        unique.append(normalized)
+    return unique
+
+
+def _preview_docs(docs) -> list[str]:
+    previews: list[str] = []
+    for doc in docs:
+        snippet = doc.page_content.strip().replace("\n", " ")
+        previews.append(snippet[:280] + ("..." if len(snippet) > 280 else ""))
+    return previews
+
+
+def _estimate_confidence(answer: str, chunk_count: int) -> int:
+    text = (answer or "").strip().lower()
+    if not text:
+        return 15
+
+    score = 45
+    score += min(chunk_count * 8, 30)
+    if len(text) > 220:
+        score += 10
+    if "không" in text and "đề cập" in text:
+        score -= 12
+    return max(10, min(95, score))
+
+
+def _run_with_metrics(func: Callable, *args):
+    start = perf_counter()
+    result = func(*args)
+    duration_ms = round((perf_counter() - start) * 1000, 2)
+    result["duration_ms"] = duration_ms
+    result["confidence"] = _estimate_confidence(
+        result.get("answer", ""),
+        int(result.get("chunk_count", 0)),
+    )
+    return result
+
+
+def _answer_with_rag(vector_store, query: str) -> dict:
+    docs = vector_store.similarity_search(query, k=3)
+    context = "\n\n".join(doc.page_content for doc in docs)
+    answer = _invoke_llm(qa_prompt(context, query))
+    return {
+        "answer": answer,
+        "context_preview": _preview_docs(docs),
+        "chunk_count": len(docs),
+    }
+
+
+def _answer_with_corag(vector_store, query: str) -> dict:
+    keywords = _extract_keywords(query)
+    expanded_queries = [query]
+    if keywords:
+        expanded_queries.append(" ".join(keywords[:6]))
+    if len(keywords) >= 2:
+        expanded_queries.append(f"{keywords[0]} {keywords[-1]}")
+    if len(keywords) >= 3:
+        expanded_queries.append(" ".join(keywords[:3]))
+
+    merged_docs = []
+    for expanded_query in _unique_texts(expanded_queries):
+        merged_docs.extend(vector_store.similarity_search(expanded_query, k=2))
+
+    unique_contexts = _unique_texts([doc.page_content for doc in merged_docs])
+    context = "\n\n".join(unique_contexts)
+    corag_prompt = f"""Bạn là CoRAG, một phiên bản suy luận mở rộng của RAG.
+Hãy tổng hợp thông tin từ nhiều truy vấn mở rộng dưới đây, ưu tiên câu trả lời đầy đủ,
+logic và có thể giải thích ngắn gọn nếu có nhiều hướng diễn giải.
+Không bịa đặt và không dùng kiến thức ngoài ngữ cảnh.
+
+=== Ngữ cảnh mở rộng ===
+{context}
+
+=== Câu hỏi ===
+{query}
+
+=== Trả lời CoRAG ==="""
+    answer = _invoke_llm(corag_prompt)
+    return {
+        "answer": answer,
+        "queries": _unique_texts(expanded_queries),
+        "context_preview": unique_contexts[:3],
+        "chunk_count": len(unique_contexts),
+    }
+
+
+@api_view(["POST"])
+def compare_pdf(request: Request) -> Response:
+    """
+    Chạy RAG và CoRAG song song trên cùng một request để so sánh.
+    """
+    query = request.data.get("query", "").strip()
+    if not query:
+        return Response({"error": "Field 'query' không được rỗng."}, status=400)
+
+    session_id = _get_session_id(request)
+    vector_store = registry.get(session_id)
+    if vector_store is None:
+        return Response(
+            {
+                "error": "Chưa có PDF nào được upload trong session này.",
+                "hint": "Gọi POST /api/upload/ trước với file PDF.",
+            },
+            status=400,
+        )
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        rag_future = executor.submit(_run_with_metrics, _answer_with_rag, vector_store, query)
+        corag_future = executor.submit(_run_with_metrics, _answer_with_corag, vector_store, query)
+        rag_result = rag_future.result()
+        corag_result = corag_future.result()
+
+    history = _append_compare_history(
+        request,
+        query,
+        rag_result["answer"],
+        corag_result["answer"],
+        rag_trace={
+            "chunk_count": rag_result.get("chunk_count", 0),
+            "duration_ms": rag_result.get("duration_ms", 0),
+            "confidence": rag_result.get("confidence", 0),
+            "context_preview": rag_result.get("context_preview", []),
+        },
+        corag_trace={
+            "queries": corag_result.get("queries", []),
+            "chunk_count": corag_result.get("chunk_count", 0),
+            "duration_ms": corag_result.get("duration_ms", 0),
+            "confidence": corag_result.get("confidence", 0),
+            "context_preview": corag_result.get("context_preview", []),
+        },
+    )
+
+    return Response(
+        {
+            "question": query,
+            "rag_answer": rag_result["answer"],
+            "corag_answer": corag_result["answer"],
+            "rag_chunk_count": rag_result.get("chunk_count", 0),
+            "corag_chunk_count": corag_result.get("chunk_count", 0),
+            "rag_duration_ms": rag_result.get("duration_ms", 0),
+            "corag_duration_ms": corag_result.get("duration_ms", 0),
+            "rag_confidence": rag_result.get("confidence", 0),
+            "corag_confidence": corag_result.get("confidence", 0),
+            "rag_context_preview": rag_result.get("context_preview", []),
+            "corag_queries": corag_result.get("queries", []),
+            "corag_context_preview": corag_result.get("context_preview", []),
+            "chat_history": history,
+            "document": _get_document_meta(request),
+        }
+    )
 
 # ------------------------------------------------------------------ #
 #  Helper: lấy session id                                             #
@@ -147,6 +349,9 @@ def handle_llm_errors(view_func: Callable) -> Callable:
                 status=500,
             )
     return wrapper
+
+
+compare_pdf = handle_llm_errors(compare_pdf)
 
 
 # ------------------------------------------------------------------ #

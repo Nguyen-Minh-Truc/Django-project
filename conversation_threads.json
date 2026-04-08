@@ -1,1 +1,137 @@
-[]
+[
+  {
+    "id": "eddfda68-7d30-4004-8fc4-8a76cfbf2183",
+    "title": "là sao",
+    "messages": [
+      {
+        "role": "assistant",
+        "content": "Tài liệu đã sẵn sàng. Bạn có thể tiếp tục hỏi thêm."
+      },
+      {
+        "role": "user",
+        "content": "là sao"
+      },
+      {
+        "role": "assistant",
+        "content": "RAG:\nDựa trên ngữ cảnh và câu hỏi được cung cấp, tôi không có thông tin chi tiết về \"sao\" cụ thể. Tôi phải nói rằng tài liệu không đề cập đến vấn đề này.\n\nCoRAG:\nSao không rõ, bạn có thể cho tôi biết thêm thông tin hay đưa ra câu hỏi cụ thể hơn để tôi có thể giúp bạn?"
+      },
+      {
+        "role": "user",
+        "content": "biết đây là tài liệu gì không ?"
+      },
+      {
+        "role": "assistant",
+        "content": "RAG:\nBài tập lớn OSSD 2026 RAG System với LLMs là một dự án nhằm xây dựng và cung cấp giải pháp hoàn chỉnh cho vấn đề tìm kiếm và xử lý thông tin từ các tài liệu điện tử. Đây là một hệ thống sử dụng mô hình Qwen2.5:7b kết hợp với công nghệ embedding đa ngôn ngữ và vector database để hỗ trợ người dùng tải lên tài liệu PDF và đặt câu hỏi.\n\nCụ thể, dự án này:\n\n• Sử dụng bộ não trí tuệ nhân tạo (AI) và xử lý ngôn ngữ tự nhiên (NLP) mạnh mẽ như Qwen2.5:7b\n• Kết hợp với công nghệ embedding đa ngôn ngữ để cung cấp đáp án chính xác cho cả tiếng Việt và tiếng Anh\n• Tính đến hiện tại, dự án này đã được thực hiện và hoàn tất\n• Đảm bảo dữ liệu là local hóa, không gửi dữ liệu ra ngoài mạng\n• Không tốn phí API calls \n• Bất tiện: dễ thay đổi mô hình và các chỉ số\n• Giao diện đơn giản và dễ sử dụng\n• Thời gian trả lời chấp nhận được với giá trị câu hỏi chính xác\n\nBài tập này cũng cung cấp thông tin chi tiết về việc tối ưu hóa hiệu suất và độ chính xác của đáp án, đặc biệt là trong ngữ cảnh tìm kiếm tài liệu PDF, do chất lượng của tài liệu có thể ảnh hưởng đến kết quả.\n\nCoRAG:\nBiện pháp: Không biết rõ loại tài liệu cụ thể.\n\nGiải thích: Với các truy vấn mở rộng như vậy, thông tin về loại tài liệu (PDF, tệp Word...) hoặc mô tả ngắn gọn của nó cần được cung cấp thêm để có thể xác định chính xác."
+      },
+      {
+        "role": "user",
+        "content": "là sao"
+      },
+      {
+        "role": "assistant",
+        "content": "RAG:\nCó thể nói \"Tài liệu không đề cập đến vấn đề này.\"\n\nCoRAG:\nĐể trả lời câu hỏi \"là gì\", chúng ta cần phân tích các nguồn thông tin liên quan:\n\n1. Bản chất của CoRAG: \nCoRAG là một phiên bản suy luận mở rộng (extended reasoning) của RAG, do đó có thể hiểu đơn giản là hệ thống giúp người dùng giải quyết vấn đề dựa trên các câu trả lời từ dữ liệu.\n\n2. Thực hành trong ngữ cảnh:\nGiống như hệ thống RAG, CoRAG sử dụng cơ sở dữ liệu để cung cấp thông tin và đáp ứng các câu hỏi thông qua câu trả lời từ đó.\n\n3. Khái niệm cơ bản:\nCoRAG có thể được xem là phiên bản mở rộng hoặc suy luận hơn so với hệ thống base-line (hệ thống RAG) thông thường, bao gồm thêm một số hướng giải quyết vấn đề và điều kiện cho phép người dùng tối ưu hóa hiệu suất.\n\n4. Tầm quan trọng:\nCoRAG nhằm hỗ trợ người dùng trong việc giải quyết các câu hỏi phức tạp bằng cách cung cấp thông tin từ dữ liệu sẵn có trên cơ sở lý luận mở rộng, giúp họ tìm ra những giải đáp tốt nhất.\n\nTóm lại, \"là CoRAG\" chỉ đơn giản là nói về hệ thống này với tên gọi cụ thể (CoRAG) được sử dụng trong ngữ cảnh của dự án SmartDoc AI."
+      }
+    ],
+    "chat_history": [
+      {
+        "question": "là sao",
+        "rag_answer": "Dựa trên ngữ cảnh và câu hỏi được cung cấp, tôi không có thông tin chi tiết về \"sao\" cụ thể. Tôi phải nói rằng tài liệu không đề cập đến vấn đề này.",
+        "corag_answer": "Sao không rõ, bạn có thể cho tôi biết thêm thông tin hay đưa ra câu hỏi cụ thể hơn để tôi có thể giúp bạn?",
+        "mode": "compare",
+        "rag_trace": {
+          "chunk_count": 3,
+          "duration_ms": 4764.2,
+          "confidence": 57,
+          "context_preview": [
+            "6.1.2 Performance Metrics . . . . . . . . . . . . . . . . . . . . . . . . . . 17 6.2 Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 6.2.1 Test Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 6.3 Ưu điểm . . . . . . ...",
+            "6 ) 14 Bài tập lớn OSSD 2026 RAG System với LLMs 5 GIAO DIỆN NGƯỜI DÙNG 5.1 Thiết kế UI/UX 5.1.1 Color Palette Hệ thống sử dụng bảng màu được tối ưu hóa cho accessibility: • Primary Color : #007BFF (Blue) - Buttons và highlights • Secondary Color : #FFC107 (Amber) - Upload button...",
+            "TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN GENERATIVE AI Ver 1.1 Bài tập lớn: SmartDoc AI - Intelligent Document Q&A System Môn học: Open source software development Học kỳ: Spring 2026 Thời hạn: April 19, 2026 TP. HỒ CHÍ MINH, NĂM 2026 Mục lục LỜI MỞ ĐẦU 4 1 GIỚI THIỆU 5 1...."
+          ]
+        },
+        "corag_trace": {
+          "queries": [
+            "là sao",
+            "sao"
+          ],
+          "chunk_count": 3,
+          "duration_ms": 7208.09,
+          "confidence": 69,
+          "context_preview": [
+            "6.1.2 Performance Metrics . . . . . . . . . . . . . . . . . . . . . . . . . . 17\n6.2 Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17\n6.2.1 Test Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17\n6.3 Ưu điểm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18\n6.4 Hạn chế . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18\n6.5 So sánh với các giải pháp khác . . . . . . . . . . . . . . . . . . . . . . . . . 18\n7 HƯỚNG DẪN SỬ DỤNG 19\n7.1 Hướng dẫn cho người dùng cuối . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.1 Khởi động ứng dụng . . . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.2 Upload tài liệu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.3 Đặt câu hỏi . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.4 Tips sử dụng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19",
+            "6 )\n14\nBài tập lớn OSSD 2026 RAG System với LLMs\n5 GIAO DIỆN NGƯỜI DÙNG\n5.1 Thiết kế UI/UX\n5.1.1 Color Palette\nHệ thống sử dụng bảng màu được tối ưu hóa cho accessibility:\n• Primary Color : #007BFF (Blue) - Buttons và highlights\n• Secondary Color : #FFC107 (Amber) - Upload buttons\n• Background: #F8F9F A (Light gray) - Main background\n• Sidebar: #2C2F33 (Dark gray) - Sidebar background\n• Text: #212529 (Dark gray) - Main text\n• Sidebar Text: #FFFFFF (White) - Sidebar text\n5.1.2 Layout Structure\nSidebar (Bên trái):\n• Instructions section\n• Settings information\n• Model configuration display\nMain Area (Chính giữa):\n• Title và header\n• File uploader\n• Question input\n• Answer display\n5.2 User Flow\n1. Landing: Người dùng thấy giao diện chính với hướng dẫn\n2. Upload: Click vào file uploader và chọn PDF\n3. Processing: Hệ thống xử lý tài liệu (hiển thị progress)\n4. Query: Nhập câu hỏi vào text input\n5. Response: Xem câu trả lời được sinh ra\n6. Iterate: Có thể đặt thêm nhiều câu hỏi\n15",
+            "TRƯỜNG ĐẠI HỌC SÀI GÒN\nKHOA CÔNG NGHỆ THÔNG TIN\nGENERATIVE AI\nVer 1.1\nBài tập lớn:\nSmartDoc AI - Intelligent Document Q&A System\nMôn học: Open source software development\nHọc kỳ: Spring 2026\nThời hạn: April 19, 2026\nTP. HỒ CHÍ MINH, NĂM 2026\nMục lục\nLỜI MỞ ĐẦU 4\n1 GIỚI THIỆU 5\n1.1 Bối cảnh và động lực . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n1.2 Mục tiêu dự án . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n1.3 Phạm vi dự án . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n2 CƠ SỞ LÝ THUYẾT 6\n2.1 RAG (Retrieval-Augmented Generation) . . . . . . . . . . . . . . . . . . . 6\n2.1.1 Khái niệm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.1.2 Kiến trúc RAG . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.2 Embedding và Vector Database . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.2.1 Text Embedding . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6"
+          ]
+        }
+      },
+      {
+        "question": "biết đây là tài liệu gì không ?",
+        "rag_answer": "Bài tập lớn OSSD 2026 RAG System với LLMs là một dự án nhằm xây dựng và cung cấp giải pháp hoàn chỉnh cho vấn đề tìm kiếm và xử lý thông tin từ các tài liệu điện tử. Đây là một hệ thống sử dụng mô hình Qwen2.5:7b kết hợp với công nghệ embedding đa ngôn ngữ và vector database để hỗ trợ người dùng tải lên tài liệu PDF và đặt câu hỏi.\n\nCụ thể, dự án này:\n\n• Sử dụng bộ não trí tuệ nhân tạo (AI) và xử lý ngôn ngữ tự nhiên (NLP) mạnh mẽ như Qwen2.5:7b\n• Kết hợp với công nghệ embedding đa ngôn ngữ để cung cấp đáp án chính xác cho cả tiếng Việt và tiếng Anh\n• Tính đến hiện tại, dự án này đã được thực hiện và hoàn tất\n• Đảm bảo dữ liệu là local hóa, không gửi dữ liệu ra ngoài mạng\n• Không tốn phí API calls \n• Bất tiện: dễ thay đổi mô hình và các chỉ số\n• Giao diện đơn giản và dễ sử dụng\n• Thời gian trả lời chấp nhận được với giá trị câu hỏi chính xác\n\nBài tập này cũng cung cấp thông tin chi tiết về việc tối ưu hóa hiệu suất và độ chính xác của đáp án, đặc biệt là trong ngữ cảnh tìm kiếm tài liệu PDF, do chất lượng của tài liệu có thể ảnh hưởng đến kết quả.",
+        "corag_answer": "Biện pháp: Không biết rõ loại tài liệu cụ thể.\n\nGiải thích: Với các truy vấn mở rộng như vậy, thông tin về loại tài liệu (PDF, tệp Word...) hoặc mô tả ngắn gọn của nó cần được cung cấp thêm để có thể xác định chính xác.",
+        "mode": "compare",
+        "rag_trace": {
+          "chunk_count": 3,
+          "duration_ms": 7276.73,
+          "confidence": 79,
+          "context_preview": [
+            "3 Bài tập lớn OSSD 2026 RAG System với LLMs LỜI MỞ ĐẦU Trong kỷ nguyên số hiện nay, việc xử lý và tìm kiếm thông tin từ các tài liệu điện tử đã trở thành một nhu cầu thiết yếu. Với sự phát triển mạnh mẽ của Trí tuệ nhân tạo (AI) và Xử lý ngôn ngữ tự nhiên (NLP), các hệ thống RAG ...",
+            "• Result: ✓ Passed 6.3 Ưu điểm 1. Privacy: Chạy hoàn toàn local, không gửi data ra ngoài 2. Cost-effective: Không tốn phí API calls 3. Customizable: Dễ dàng thay đổi models và parameters 4. User-friendly: Giao diện đơn giản, dễ sử dụng 5. Accurate: Retrieval-based giúp câu trả lờ...",
+            "6. Tối ưu hóa hiệu suất và độ chính xác của câu trả lời 1.3 Phạm vi dự án Dự án tập trung vào: • Xử lý tài liệu PDF đa ngôn ngữ • Hỗ trợ xuất sắc cho tiếng Việt và 50+ ngôn ngữ khác • Tự động phát hiện ngôn ngữ và trả lời phù hợp • Chạy local trên máy tính cá nhân • Sử dụng mô hì..."
+          ]
+        },
+        "corag_trace": {
+          "queries": [
+            "biết đây là tài liệu gì không ?",
+            "biết đây tài liệu không",
+            "biết không",
+            "biết đây tài"
+          ],
+          "chunk_count": 3,
+          "duration_ms": 10014.8,
+          "confidence": 69,
+          "context_preview": [
+            "3\nBài tập lớn OSSD 2026 RAG System với LLMs\nLỜI MỞ ĐẦU\nTrong kỷ nguyên số hiện nay, việc xử lý và tìm kiếm thông tin từ các tài liệu điện tử đã\ntrở thành một nhu cầu thiết yếu. Với sự phát triển mạnh mẽ của Trí tuệ nhân tạo (AI) và\nXử lý ngôn ngữ tự nhiên (NLP), các hệ thống RAG (Retrieval-Augmented Generation)\nđã nổi lên như một giải pháp hiệu quả cho bài toán này.\nDự án này được thực hiện nhằm xây dựng một hệ thống RAG hoàn chỉnh, cho phép\nngười dùng tải lên tài liệu PDF và đặt câu hỏi về nội dung tài liệu. Hệ thống sử dụng\nmô hình Qwen2.5:7b thông qua Ollama, kết hợp với công nghệ embedding đa ngôn ngữ\nvà vector database để cung cấp câu trả lời chính xác cho cả tiếng Việt và tiếng Anh.\nBáo cáo này trình bày chi tiết về kiến trúc hệ thống, các công nghệ được sử dụng, quy\ntrình triển khai và kết quả đạt được.\n4\nBài tập lớn OSSD 2026 RAG System với LLMs\n1 GIỚI THIỆU\n1.1 Bối cảnh và động lực\nVới khối lượng thông tin ngày càng tăng trong các tài liệu số, việc tìm kiếm và trích xuất",
+            "• Result: ✓ Passed\n6.3 Ưu điểm\n1. Privacy: Chạy hoàn toàn local, không gửi data ra ngoài\n2. Cost-effective: Không tốn phí API calls\n3. Customizable: Dễ dàng thay đổi models và parameters\n4. User-friendly: Giao diện đơn giản, dễ sử dụng\n5. Accurate: Retrieval-based giúp câu trả lời chính xác hơn\n6. Fast: Response time chấp nhận được\n6.4 Hạn chế\n1. Model size : 1.5B parameters có giới hạn về khả năng reasoning\n2. Context length : Giới hạn số lượng chunks có thể xử lý\n3. Language support : Chủ yếu tốt cho tiếng Anh\n4. PDF quality : Phụ thuộc vào chất lượng PDF input\n5. Hardware requirement : Cần máy tính đủ mạnh\n6.5 So sánh với các giải pháp khác\nFeature Dự án này ChatGPT Local LLM\nPrivacy ✓ ✗ ✓\nCost Free Paid Free\nCustomization High Low High\nDocument Upload ✓ ✓ ✗\nAccuracy Good Excellent Variable\nSpeed Fast Very Fast Slow\n18\nBài tập lớn OSSD 2026 RAG System với LLMs\n7 HƯỚNG DẪN SỬ DỤNG\n7.1 Hướng dẫn cho người dùng cuối\n7.1.1 Khởi động ứng dụng\n1. Mở terminal/command prompt",
+            "TRƯỜNG ĐẠI HỌC SÀI GÒN\nKHOA CÔNG NGHỆ THÔNG TIN\nGENERATIVE AI\nVer 1.1\nBài tập lớn:\nSmartDoc AI - Intelligent Document Q&A System\nMôn học: Open source software development\nHọc kỳ: Spring 2026\nThời hạn: April 19, 2026\nTP. HỒ CHÍ MINH, NĂM 2026\nMục lục\nLỜI MỞ ĐẦU 4\n1 GIỚI THIỆU 5\n1.1 Bối cảnh và động lực . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n1.2 Mục tiêu dự án . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n1.3 Phạm vi dự án . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n2 CƠ SỞ LÝ THUYẾT 6\n2.1 RAG (Retrieval-Augmented Generation) . . . . . . . . . . . . . . . . . . . 6\n2.1.1 Khái niệm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.1.2 Kiến trúc RAG . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.2 Embedding và Vector Database . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.2.1 Text Embedding . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6"
+          ]
+        }
+      },
+      {
+        "question": "là sao",
+        "rag_answer": "Có thể nói \"Tài liệu không đề cập đến vấn đề này.\"",
+        "corag_answer": "Để trả lời câu hỏi \"là gì\", chúng ta cần phân tích các nguồn thông tin liên quan:\n\n1. Bản chất của CoRAG: \nCoRAG là một phiên bản suy luận mở rộng (extended reasoning) của RAG, do đó có thể hiểu đơn giản là hệ thống giúp người dùng giải quyết vấn đề dựa trên các câu trả lời từ dữ liệu.\n\n2. Thực hành trong ngữ cảnh:\nGiống như hệ thống RAG, CoRAG sử dụng cơ sở dữ liệu để cung cấp thông tin và đáp ứng các câu hỏi thông qua câu trả lời từ đó.\n\n3. Khái niệm cơ bản:\nCoRAG có thể được xem là phiên bản mở rộng hoặc suy luận hơn so với hệ thống base-line (hệ thống RAG) thông thường, bao gồm thêm một số hướng giải quyết vấn đề và điều kiện cho phép người dùng tối ưu hóa hiệu suất.\n\n4. Tầm quan trọng:\nCoRAG nhằm hỗ trợ người dùng trong việc giải quyết các câu hỏi phức tạp bằng cách cung cấp thông tin từ dữ liệu sẵn có trên cơ sở lý luận mở rộng, giúp họ tìm ra những giải đáp tốt nhất.\n\nTóm lại, \"là CoRAG\" chỉ đơn giản là nói về hệ thống này với tên gọi cụ thể (CoRAG) được sử dụng trong ngữ cảnh của dự án SmartDoc AI.",
+        "mode": "compare",
+        "rag_trace": {
+          "chunk_count": 3,
+          "duration_ms": 2792.36,
+          "confidence": 57,
+          "context_preview": [
+            "6.1.2 Performance Metrics . . . . . . . . . . . . . . . . . . . . . . . . . . 17 6.2 Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 6.2.1 Test Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17 6.3 Ưu điểm . . . . . . ...",
+            "6 ) 14 Bài tập lớn OSSD 2026 RAG System với LLMs 5 GIAO DIỆN NGƯỜI DÙNG 5.1 Thiết kế UI/UX 5.1.1 Color Palette Hệ thống sử dụng bảng màu được tối ưu hóa cho accessibility: • Primary Color : #007BFF (Blue) - Buttons và highlights • Secondary Color : #FFC107 (Amber) - Upload button...",
+            "TRƯỜNG ĐẠI HỌC SÀI GÒN KHOA CÔNG NGHỆ THÔNG TIN GENERATIVE AI Ver 1.1 Bài tập lớn: SmartDoc AI - Intelligent Document Q&A System Môn học: Open source software development Học kỳ: Spring 2026 Thời hạn: April 19, 2026 TP. HỒ CHÍ MINH, NĂM 2026 Mục lục LỜI MỞ ĐẦU 4 1 GIỚI THIỆU 5 1...."
+          ]
+        },
+        "corag_trace": {
+          "queries": [
+            "là sao",
+            "sao"
+          ],
+          "chunk_count": 3,
+          "duration_ms": 9666.43,
+          "confidence": 79,
+          "context_preview": [
+            "6.1.2 Performance Metrics . . . . . . . . . . . . . . . . . . . . . . . . . . 17\n6.2 Testing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17\n6.2.1 Test Cases . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17\n6.3 Ưu điểm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18\n6.4 Hạn chế . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18\n6.5 So sánh với các giải pháp khác . . . . . . . . . . . . . . . . . . . . . . . . . 18\n7 HƯỚNG DẪN SỬ DỤNG 19\n7.1 Hướng dẫn cho người dùng cuối . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.1 Khởi động ứng dụng . . . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.2 Upload tài liệu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.3 Đặt câu hỏi . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19\n7.1.4 Tips sử dụng . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19",
+            "6 )\n14\nBài tập lớn OSSD 2026 RAG System với LLMs\n5 GIAO DIỆN NGƯỜI DÙNG\n5.1 Thiết kế UI/UX\n5.1.1 Color Palette\nHệ thống sử dụng bảng màu được tối ưu hóa cho accessibility:\n• Primary Color : #007BFF (Blue) - Buttons và highlights\n• Secondary Color : #FFC107 (Amber) - Upload buttons\n• Background: #F8F9F A (Light gray) - Main background\n• Sidebar: #2C2F33 (Dark gray) - Sidebar background\n• Text: #212529 (Dark gray) - Main text\n• Sidebar Text: #FFFFFF (White) - Sidebar text\n5.1.2 Layout Structure\nSidebar (Bên trái):\n• Instructions section\n• Settings information\n• Model configuration display\nMain Area (Chính giữa):\n• Title và header\n• File uploader\n• Question input\n• Answer display\n5.2 User Flow\n1. Landing: Người dùng thấy giao diện chính với hướng dẫn\n2. Upload: Click vào file uploader và chọn PDF\n3. Processing: Hệ thống xử lý tài liệu (hiển thị progress)\n4. Query: Nhập câu hỏi vào text input\n5. Response: Xem câu trả lời được sinh ra\n6. Iterate: Có thể đặt thêm nhiều câu hỏi\n15",
+            "TRƯỜNG ĐẠI HỌC SÀI GÒN\nKHOA CÔNG NGHỆ THÔNG TIN\nGENERATIVE AI\nVer 1.1\nBài tập lớn:\nSmartDoc AI - Intelligent Document Q&A System\nMôn học: Open source software development\nHọc kỳ: Spring 2026\nThời hạn: April 19, 2026\nTP. HỒ CHÍ MINH, NĂM 2026\nMục lục\nLỜI MỞ ĐẦU 4\n1 GIỚI THIỆU 5\n1.1 Bối cảnh và động lực . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n1.2 Mục tiêu dự án . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n1.3 Phạm vi dự án . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5\n2 CƠ SỞ LÝ THUYẾT 6\n2.1 RAG (Retrieval-Augmented Generation) . . . . . . . . . . . . . . . . . . . 6\n2.1.1 Khái niệm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.1.2 Kiến trúc RAG . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.2 Embedding và Vector Database . . . . . . . . . . . . . . . . . . . . . . . . 6\n2.2.1 Text Embedding . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6"
+          ]
+        }
+      }
+    ],
+    "document_meta": {
+      "file_name": "project_report_final.pdf",
+      "file_type": "pdf",
+      "chunk_size": 1000,
+      "chunk_overlap": 100
+    },
+    "updated_at": "2026-04-08T11:29:33"
+  }
+]

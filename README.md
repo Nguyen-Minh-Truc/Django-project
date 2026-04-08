@@ -3,6 +3,7 @@
 Ứng dụng hỏi đáp tài liệu dùng `Django + Streamlit + LangChain + Ollama`.
 
 Project hiện hỗ trợ:
+
 - Upload và xử lý `PDF`
 - Upload và xử lý `DOCX`
 - Hỏi đáp nhiều lượt trên cùng tài liệu
@@ -30,7 +31,7 @@ project/
 ├── app.py
 ├── requirements.txt
 ├── conversation_threads.json
-├── rag_graph/
+├── RAG-CORAG/
 │   ├── manage.py
 │   ├── myapp/
 │   │   ├── settings.py
@@ -86,7 +87,7 @@ Mở 2 terminal riêng.
 
 ```bash
 source venv/bin/activate
-cd rag_graph
+cd RAG-CORAG
 python manage.py runserver
 ```
 
@@ -148,7 +149,7 @@ http://localhost:8501
 ## Kiểm tra nhanh backend
 
 ```bash
-cd rag_graph
+cd RAG-CORAG
 python manage.py check
 python manage.py test
 ```
@@ -204,6 +205,7 @@ pip install python-docx
 ### `Bad Request: /api/ask/`
 
 Nguyên nhân thường gặp:
+
 - chưa upload tài liệu trước
 - session cookie không được giữ giữa các request
 
